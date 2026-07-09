@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "order.created",
+  "type": "object",
+  "required": ["orderId", "userId", "items", "totalAmount", "createdAt"],
+  "properties": {
+    "orderId": { "type": "string", "format": "uuid" },
+    "userId": { "type": "string", "format": "uuid" },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["productId", "quantity", "unitPrice"],
+        "properties": {
+          "productId": { "type": "string" },
+          "quantity": { "type": "integer", "minimum": 1 },
+          "unitPrice": { "type": "number" }
+        }
+      }
+    },
+    "totalAmount": { "type": "number" },
+    "createdAt": { "type": "string", "format": "date-time" }
+  }
+}

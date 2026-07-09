@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "payment.completed",
+  "type": "object",
+  "required": ["paymentId", "orderId", "amount", "status", "completedAt"],
+  "properties": {
+    "paymentId": { "type": "string", "format": "uuid" },
+    "orderId": { "type": "string", "format": "uuid" },
+    "amount": { "type": "number" },
+    "status": { "type": "string", "enum": ["SUCCESS", "FAILED"] },
+    "completedAt": { "type": "string", "format": "date-time" }
+  }
+}
