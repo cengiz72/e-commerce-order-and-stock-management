@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.ecommerce</groupId>
+    <artifactId>ecommerce-parent</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <artifactId>app</artifactId>
+  <packaging>jar</packaging>
+  <name>app</name>
+  <description>Runnable Spring Boot application. Assembles all domain modules into one deployable jar for local development; each module can later be extracted into its own deployable.</description>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.ecommerce</groupId>
+      <artifactId>order-service</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.ecommerce</groupId>
+      <artifactId>product-service</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.ecommerce</groupId>
+      <artifactId>payment-service</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.ecommerce</groupId>
+      <artifactId>notification-service</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.ecommerce</groupId>
+      <artifactId>user-service</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>app</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <mainClass>com.ecommerce.app.EcommerceApplication</mainClass>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
