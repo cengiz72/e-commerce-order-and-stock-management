@@ -1,8 +1,6 @@
 ---
 paths:
-  - "src/api/**/*.ts"
-  - "app/api/**/*.ts"
-  - "server/**/*.ts"
+  - "src/main/**/*.java"
 ---
 
 # API Rules

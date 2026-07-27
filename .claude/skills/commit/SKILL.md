@@ -3,6 +3,7 @@ name: commit
 description: Review current changes, verify checks, and prepare a Conventional Commit message.
 disable-model-invocation: true
 argument-hint: "<optional scope or push flag>"
+model: haiku
 ---
 
 # Commit Skill
