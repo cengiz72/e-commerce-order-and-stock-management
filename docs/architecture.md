@@ -6,6 +6,8 @@ Event-driven e-commerce order & inventory management system.
 
 Order creation → stock check → payment → notification, running asynchronously through Kafka. Each step publishes an event; downstream services consume it independently instead of calling each other synchronously.
 
+Rollback across this flow (e.g. payment fails after stock was reserved) is handled with the **Saga pattern** (choreography-based): each service compensates its own local step by reacting to failure events, rather than a central transaction rolling everything back. See `docs/adr/0001-saga-pattern-for-rollback.md`.
+
 ## Backend Services
 
 - **product-service** — MongoDB. Owns products, categories, stock levels.

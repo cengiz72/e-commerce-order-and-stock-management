@@ -37,7 +37,10 @@ frontend/src/
 ├── features/cart/        → cart (backed by Redis-backed endpoints)
 ├── features/orders/      → order tracking
 ├── features/products/    → product listing/search
-└── features/admin/       → inventory admin panel
+├── features/admin/       → inventory admin panel
+├── components/           → shared presentational UI, no service imports
+├── services/             → all HTTP calls, one module per backend service
+└── hooks/                → shared cross-feature hooks (auth, polling, etc.)
 ```
 For detailed module descriptions, see: @docs/architecture.md
 
@@ -87,4 +90,5 @@ For detailed module descriptions, see: @docs/architecture.md
 - Project rules: @.claude/rules/
 - Skills: @.claude/skills/
 - Architecture details: @docs/architecture.md
+- Frontend architecture: @docs/frontend-architecture.md
 - Kafka event schemas: @docs/kafka-topics.md
