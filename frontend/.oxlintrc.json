@@ -3,6 +3,27 @@
   "plugins": ["react", "typescript", "oxc"],
   "rules": {
     "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
+    "react/only-export-components": ["warn", { "allowConstantExport": true }],
+    "no-restricted-globals": [
+      "error",
+      {
+        "name": "fetch",
+        "message": "Use the shared HTTP client (services/http) instead of calling fetch directly — CLAUDE.md: API calls live under services/, never inside components."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["src/services/http/**"],
+      "rules": {
+        "no-restricted-globals": "off"
+      }
+    },
+    {
+      "files": ["**/*.test.ts", "**/*.test.tsx"],
+      "rules": {
+        "no-restricted-globals": "off"
+      }
+    }
+  ]
 }
