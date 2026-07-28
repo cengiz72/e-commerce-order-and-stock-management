@@ -5,9 +5,10 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   test: {
-    // Node environment is enough today: the only tests are for the HTTP client, which stubs
-    // global fetch and needs no DOM.
+    // Node stays the default: the HTTP client tests only stub global fetch and need no DOM.
+    // React tests (context providers, hooks) opt into jsdom per file with a
+    // `// @vitest-environment jsdom` docblock, so they don't slow the rest down.
     environment: 'node',
-    include: ['src/**/*.test.ts'],
+    include: ['src/**/*.test.{ts,tsx}'],
   },
 })
