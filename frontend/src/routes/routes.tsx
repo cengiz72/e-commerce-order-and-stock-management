@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from 'react-router'
+import { createBrowserRouter, Navigate, Outlet } from 'react-router'
 import type { RouteObject } from 'react-router'
 import { AdminInventoryPage } from '../features/admin'
 import { LoginPage, RegisterPage } from '../features/auth'
@@ -7,6 +7,7 @@ import { OrderTrackingPage } from '../features/orders'
 import { ProductDetailPage, ProductListPage } from '../features/products'
 import { RequireAdmin, RequireAuth } from './guards'
 import { ROUTE_PATHS } from './paths'
+import { RouteErrorFallback } from './routeError'
 
 /**
  * The application's route table (docs/frontend-architecture.md §3.8, A10).
@@ -15,8 +16,7 @@ import { ROUTE_PATHS } from './paths'
  * access rules live in `guards.tsx`. This module only says *which URL shows what, behind
  * which guard*.
  *
- * It is exported as data and **not mounted anywhere yet**: `main.tsx`/`App.tsx` are untouched
- * by this ticket. The app-shell ticket mounts it as
+ * It is exported as data and mounted by the app shell (`App.tsx`) as
  *
  * ```tsx
  * <AuthProvider>
@@ -28,9 +28,11 @@ import { ROUTE_PATHS } from './paths'
  * `useAuth()`, which throws when no provider is present.
  *
  * Router library: React Router, chosen as the documented fallback while OQ3 (routing approach)
- * is unresolved. Only this file and `guards.tsx` import it, so switching costs two files.
+ * is unresolved. Only this file, `guards.tsx` and `routeError.tsx` import it.
  */
-export const appRoutes: RouteObject[] = [
+
+/** The pages, in the order a visitor meets them. Wrapped by {@link appRoutes}. */
+const pageRoutes: RouteObject[] = [
   // `/` owns no page of its own; the storefront list is the real landing surface.
   { path: ROUTE_PATHS.home, element: <Navigate to={ROUTE_PATHS.products} replace /> },
 
@@ -75,6 +77,24 @@ export const appRoutes: RouteObject[] = [
         <AdminInventoryPage />
       </RequireAdmin>
     ),
+  },
+]
+
+/**
+ * The mounted route table: every page above, behind one shared error element.
+ *
+ * The wrapper is a **pathless layout route** — it matches no URL of its own and renders only an
+ * `<Outlet />`, so it changes nothing about which URL shows what. It exists because React Router
+ * catches route render errors in its **own** boundary before they can reach the shell's
+ * `ErrorBoundary`, and without an `errorElement` it falls back to its built-in "Unexpected
+ * Application Error!" stack-trace screen. One wrapper gives every page the app's own fallback;
+ * see `routeError.tsx`.
+ */
+export const appRoutes: RouteObject[] = [
+  {
+    element: <Outlet />,
+    errorElement: <RouteErrorFallback />,
+    children: pageRoutes,
   },
 ]
 

@@ -1,0 +1,303 @@
+/*
+ * Baseline styling for the shared design system.
+ *
+ * Deliberately minimal: enough for the primitives to be usable and visually coherent (a modal
+ * needs an overlay, a spinner needs an animation), not a theme. No CSS framework and no
+ * CSS-in-JS dependency was added — plain CSS with `ui-` prefixed class names keeps this ticket
+ * free of the styling-stack decision, which no ADR has taken yet.
+ *
+ * Imported once from `components/index.ts`, so every consumer of the barrel gets it.
+ */
+
+.ui-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.375rem;
+  font: inherit;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.ui-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.ui-button--primary {
+  background: #1d4ed8;
+  color: #fff;
+}
+
+.ui-button--secondary {
+  background: transparent;
+  border-color: currentColor;
+  color: inherit;
+}
+
+.ui-button--danger {
+  background: #b91c1c;
+  color: #fff;
+}
+
+.ui-button--ghost {
+  background: transparent;
+  color: inherit;
+}
+
+.ui-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-block-end: 1rem;
+}
+
+.ui-field__label {
+  font-weight: 600;
+}
+
+.ui-field__hint,
+.ui-field__error {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.ui-field__error {
+  color: #b91c1c;
+}
+
+.ui-input,
+.ui-select {
+  padding: 0.5rem;
+  border: 1px solid #9ca3af;
+  border-radius: 0.375rem;
+  font: inherit;
+}
+
+.ui-input--invalid,
+.ui-select--invalid {
+  border-color: #b91c1c;
+}
+
+.ui-money--unavailable {
+  opacity: 0.6;
+}
+
+.ui-status-badge {
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+.ui-status-badge--info {
+  color: #1d4ed8;
+}
+
+.ui-status-badge--success {
+  color: #15803d;
+}
+
+.ui-status-badge--warning {
+  color: #b45309;
+}
+
+.ui-status-badge--danger {
+  color: #b91c1c;
+}
+
+.ui-spinner {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: ui-spinner-rotate 0.8s linear infinite;
+}
+
+.ui-spinner--sm {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.ui-spinner--lg {
+  width: 2rem;
+  height: 2rem;
+  border-width: 3px;
+}
+
+@keyframes ui-spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ui-skeleton {
+  display: block;
+}
+
+.ui-skeleton__line {
+  display: block;
+  width: 100%;
+  height: 1em;
+  margin-block-end: 0.375rem;
+  border-radius: 0.25rem;
+  background: currentColor;
+  opacity: 0.15;
+  animation: ui-skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes ui-skeleton-pulse {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* Motion is decoration here; respect a user who asked for less of it. */
+@media (prefers-reduced-motion: reduce) {
+  .ui-spinner,
+  .ui-skeleton__line {
+    animation: none;
+  }
+}
+
+.ui-empty-state {
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.ui-empty-state__title {
+  margin: 0 0 0.25rem;
+  font-weight: 600;
+}
+
+.ui-empty-state__description {
+  margin: 0 0 1rem;
+  opacity: 0.8;
+}
+
+.ui-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ui-table th,
+.ui-table td {
+  padding: 0.5rem 0.75rem;
+  border-block-end: 1px solid #d1d5db;
+}
+
+.ui-table__cell--start {
+  text-align: start;
+}
+
+.ui-table__cell--end {
+  text-align: end;
+}
+
+.ui-table__empty {
+  text-align: center;
+}
+
+.ui-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgb(0 0 0 / 50%);
+}
+
+.ui-modal {
+  width: min(32rem, 100%);
+  max-height: 90svh;
+  overflow: auto;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: Canvas;
+  color: CanvasText;
+}
+
+.ui-modal__header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.ui-modal__title {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.ui-modal__close,
+.ui-toast__dismiss {
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ui-modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-block-start: 1rem;
+}
+
+.ui-toast {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid currentColor;
+  border-radius: 0.375rem;
+}
+
+.ui-toast--success {
+  color: #15803d;
+}
+
+.ui-toast--warning {
+  color: #b45309;
+}
+
+.ui-toast--error {
+  color: #b91c1c;
+}
+
+.ui-toast__title {
+  margin: 0 0 0.25rem;
+  font-weight: 600;
+}
+
+.ui-error-fallback {
+  padding: 1rem;
+  border: 1px solid #b91c1c;
+  border-radius: 0.375rem;
+}
+
+.ui-error-fallback__title {
+  margin: 0 0 0.25rem;
+  font-weight: 600;
+}
+
+.ui-error-fallback__description,
+.ui-error-fallback__detail {
+  margin: 0 0 0.75rem;
+}
+
+.ui-error-fallback__detail {
+  font-family: ui-monospace, monospace;
+  font-size: 0.875rem;
+  opacity: 0.8;
+}
