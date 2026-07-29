@@ -13,3 +13,27 @@ body {
   margin: 0;
   min-height: 100svh;
 }
+
+/*
+ * Where the shell stacks toasts (hooks/toast). Placement is an app-shell concern, so it lives
+ * here rather than in components/components.css, which styles the toast itself and must stay
+ * reusable wherever a feature drops one.
+ */
+.app-toast-viewport {
+  position: fixed;
+  inset-block-end: 1rem;
+  inset-inline-end: 1rem;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: min(24rem, calc(100vw - 2rem));
+  /* The container spans the corner; only the toasts themselves should catch clicks. */
+  pointer-events: none;
+}
+
+.app-toast-viewport > * {
+  pointer-events: auto;
+  /* Toasts float over page content, so they need an opaque backdrop of their own. */
+  background: Canvas;
+}
